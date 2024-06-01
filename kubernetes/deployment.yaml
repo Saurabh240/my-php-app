@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-php-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-php-app
+  template:
+    metadata:
+      labels:
+        app: my-php-app
+    spec:
+      containers:
+      - name: my-php-app
+        image: my-php-app:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: "/mnt/ntfs-share"
+          name: ntfs-share
+      volumes:
+      - name: ntfs-share
+        persistentVolumeClaim:
+          claimName: ntfs-pvc
